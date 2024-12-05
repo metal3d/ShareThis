@@ -1,0 +1,16 @@
+[Unit]
+Description=WebDav share service
+
+[Container]
+Image=ghcr.io/metal3d/sharethis:main
+AutoUpdate=registry
+PublishPort=8088:8080
+Volume=%h/Public:/data/www:Z
+UserNS=keep-id
+ContainerName=webdav-sharethis
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
