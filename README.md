@@ -1,4 +1,4 @@
-## ShareThis directory as WebDav without hassle
+# ShareThis directory as WebDav without hassle
 
 No password, no login, no registration, no configuratio, only share this directory.
 
@@ -6,10 +6,9 @@ For **Podman** users! I never tried it with Docker... It needs `keep-id` user na
 
 ## How to test?
 
-```
-mkdur -p /tmp/test-webdav
+```bash
+mkdir -p /tmp/test-webdav
 podman run -v /tmp/test-webdav:/var/www/html:z -p 8088:80 --rm ghcr.io/metal3d/sharethis:main
-
 # then open a dav://localhost:8088/ on Gnome file manager
 ```
 
@@ -25,11 +24,15 @@ Copy the "`webdav.container`" file inside `~/.config/containers/sytemd/` directo
 ```bash
 mkdir -p ~/.config/containers/sytemd/
 curl -sSL https://raw.githubusercontent.com/metal3d/ShareThis/main/webdav.container -O ~/.config/containers/sytemd/webdav.container
+# you can edit the file to change the port, or the image version
+# then...
 systemctl --user daemon-reload
 systemctl --user start webdav
 ```
 
-You should now have a running webdav server on port 8080.
+> I **strongly** recommend using this as non-root user.
+
+You should now have a running WebDav server on port 8088.
 
 ```bash
 $ systemctl --user status webdav
@@ -45,20 +48,21 @@ $ podman ps | grep -o "webdav-.*"
 webdav-sharethis
 ```
 
-Now, go to Gnome file manager (Nautilus) and type `dav://localhost:8080` in the location bar. You should see the content
+Now, go to Gnome file manager (Nautilus) and type `dav://localhost:8088` in the location bar. You should see the content
 of your home 'Public' directory.
 
-Copying file in this directory will make them accessible through the webdav server. And vice versa.
+Copying files in this directory will make them accessible through the WebDav server. And vice versa.
 
 ## Why not using the "share" feature of Gnome?
 
 You can, if you only use Linux on your local network, it's great.
 
-But... If you need to share files with Windows, MacOS, or even with your phone, it's not so easy:
+But... If you need to share files with Windows, macOS, or even with your phone, it's not so easy:
 
 - It changes port each time you start sharing, or if you restart your computer
 - It makes very complicated to access the shared directory from another computer, especially on Windows...
-- It's easy with a Podman image, and the fantastic [Quadlet](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html) feature.
+- It's easy with a Podman image, and the
+fantastic [Quadlet](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html) feature.
 
 **So I made this simple WebDav server.**
 
@@ -67,7 +71,7 @@ But... If you need to share files with Windows, MacOS, or even with your phone, 
 Nothing very special, it's a simple `nginx` server with the `webdav` module enabled. The configuration is very simple:
 
 - apache httpd server
-- webdav modules
+- WebDav modules
 - some other modules to allow access to the directory
 - a declared volume
 - changing the port to 8080 to allow running without root
