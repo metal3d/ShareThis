@@ -8,7 +8,7 @@ For **Podman** users! I never tried it with Docker... It needs `keep-id` user na
 
 ```bash
 mkdir -p /tmp/test-webdav
-podman run -v /tmp/test-webdav:/var/www/html:z -p 8088:80 --rm ghcr.io/metal3d/sharethis:main
+podman run -v /tmp/test-webdav:/data/www:Z -p 8088:80 --rm ghcr.io/metal3d/sharethis:main
 # then open a dav://localhost:8088/ on Gnome file manager
 ```
 
