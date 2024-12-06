@@ -68,9 +68,10 @@ fantastic [Quadlet](https://docs.podman.io/en/latest/markdown/podman-systemd.uni
 
 ## What's inside?
 
-Nothing very special, it's a simple `nginx` server with the `webdav` module enabled. The configuration is very simple:
+Nothing very special, it's a simple `httpd` (Apache2) server with the `webdav` module enabled. The configuration is
+very simple:
 
-- apache httpd server
+- Apache `httpd` server
 - WebDav modules
 - some other modules to allow access to the directory
 - a declared volume
@@ -80,14 +81,17 @@ and the [httpd.conf](https://github.com/metal3d/ShareThis/blob/main/conf/httpd.c
 
 ## Some notes about the container and the versions
 
-- The "main" branch is packaged in the registry on each push. So the ":main" tag is always up to date.
+- The "latest" branch is packaged in the registry on each release. So the ":latest" tag is always up-to-date and related
+to the "stable" version (the latest tag).
 - Because the "`AutoUpdate`" directive is set to `registry`, the container is updated on each start. You can change this
 behavior, see below.
-- A relase is created to freeze a version. So you can change "`:latest`" or a specific version in the `webdav.container`
-file if you need it.
+- A release is created on each "main" update, so you can change the image tag to "`:main`" to be on bleeding edge version.
+- Or, of course, you may specify a fixed version like "v1.0.0" to keep a working version without any surprise.
 
 > **Each time you want to change the file in `~/.config/containers/sytemd/` directory, you need to run the `systemctl --user
 daermon-reload` command.**
+
+## How to uninstall?
 
 To remove the service:
 

@@ -2,7 +2,7 @@
 Description=WebDav share service
 
 [Container]
-Image=ghcr.io/metal3d/sharethis:main
+Image=ghcr.io/metal3d/sharethis:latest
 AutoUpdate=registry
 PublishPort=8088:8080
 Volume=%h/Public:/data/www:Z
